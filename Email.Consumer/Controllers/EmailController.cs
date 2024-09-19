@@ -7,6 +7,8 @@ public class EmailController
 {
     private readonly static string EMAIL = "";
     private readonly static string SENHA = "";
+    private readonly static string SMPT_HOST = "smtp.gmail.com";
+    private readonly static int SMPT_PORT = 587;
 
     public static async Task<bool> SendEmailAsync(Domain.Email email)
     {
@@ -35,7 +37,7 @@ public class EmailController
                 mail.To.Add(mailTo);
             }
 
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            SmtpClient smtp = new SmtpClient(SMPT_HOST, SMPT_PORT);
             smtp.Credentials = new NetworkCredential(EMAIL, SENHA);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 
