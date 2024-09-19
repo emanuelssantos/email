@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using Email.Domain;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Email.Controllers;
@@ -19,13 +20,33 @@ public class EmailController : ControllerBase
     {
         try
         {
+            var emailFile = new List<EmailFile>();
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        emailFile.Add(new EmailFile
+                        {
+                            ContentType = file.ContentType,
+                            FileName = file.FileName,
+                            Bytes = fileBytes
+                        });
+                    }
+                }
+            }
+
 
             var to = new List<string>() { email };
             _ = _publish.Publish<Domain.Email>(new
             {
                 Body = email,
                 Subject = "Teste",
-                To = to
+                To = to,
+                Files = emailFile
             });
 
             return Ok("Email agendado");
