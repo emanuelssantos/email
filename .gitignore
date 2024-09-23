@@ -3,7 +3,8 @@
 ################################################################################
 
 /.vs
-*/bin/Debug/net8.0
-*/obj
+**/bin
+**/obj
 *.Producer.csproj.user
 */.config/dotnet-tools.json
+**/appsettings.Development.json

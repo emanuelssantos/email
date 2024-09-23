@@ -3,6 +3,13 @@ using MassTransit;
 
 var builder = Host.CreateApplicationBuilder(args);
 
+var smtpSettings = builder.Configuration.GetSection("SMTP").Get<SmtpSettings>();
+
+// Registrar a instância do SmtpSettings
+builder.Services.AddSingleton(smtpSettings);
+
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 builder.Services.AddMassTransit(m =>
 {
     m.AddConsumer<EmailConsumer>();

@@ -1,22 +1,27 @@
-﻿using System.Net;
+﻿using Email.Consumer.Helpers;
+using Email.Consumer.Interfaces;
+using Microsoft.Extensions.Options;
+using System.Net;
 using System.Net.Mail;
 
-namespace Email.Consumer.Controllers;
+namespace Email.Consumer.Services;
 
-public class EmailController
+public class EmailService : IEmailService
 {
-    private readonly static string EMAIL = "";
-    private readonly static string SENHA = "";
-    private readonly static string SMPT_HOST = "smtp.gmail.com";
-    private readonly static int SMPT_PORT = 587;
+    private readonly SmtpSettings _smtpSettings;
 
-    public static async Task<bool> SendEmailAsync(Domain.Email email)
+    public EmailService(SmtpSettings smtpSettings)
+    {
+        _smtpSettings = smtpSettings;
+    }
+
+    public async Task<bool> SendEmailAsync(Domain.Email email)
     {
         try
         {
             MailMessage mail = new MailMessage()
             {
-                From = new MailAddress(EMAIL),
+                From = new MailAddress(_smtpSettings.From),
                 Subject = email.Subject,
                 Body = email.Body
             };
@@ -37,12 +42,7 @@ public class EmailController
                 mail.To.Add(mailTo);
             }
 
-            SmtpClient smtp = new SmtpClient(SMPT_HOST, SMPT_PORT);
-            smtp.Credentials = new NetworkCredential(EMAIL, SENHA);
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-
-            //smtp.UseDefaultCredentials = true;
-            await smtp.SendMailAsync(mail);
+            await _smtpSettings.SendMailAsync(mail);
 
             return true;
         }
@@ -51,6 +51,5 @@ public class EmailController
             Console.Error.WriteLine(e.Message);
             throw;
         }
-
     }
 }
