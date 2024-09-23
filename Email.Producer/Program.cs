@@ -14,11 +14,10 @@ builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host("localhost", "/", c =>
-        {
-            c.Username("guest");
-            c.Password("guest");
-        });
+        var configuration = ctx.GetRequiredService<IConfiguration>();
+        var host = configuration.GetConnectionString("RabbitMQConnection");
+        cfg.Host(host);
+
         cfg.ConfigureEndpoints(ctx);
     });
 });

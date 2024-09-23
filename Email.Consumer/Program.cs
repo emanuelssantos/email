@@ -15,11 +15,10 @@ builder.Services.AddMassTransit(m =>
     m.AddConsumer<EmailConsumer>();
     m.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host("localhost", "/", c =>
-        {
-            c.Username("guest");
-            c.Password("guest");
-        });
+        var configuration = ctx.GetRequiredService<IConfiguration>();
+        var host = configuration.GetConnectionString("RabbitMQConnection");
+        cfg.Host(host);
+        
         cfg.ConcurrentMessageLimit = 10;
         cfg.ConfigureEndpoints(ctx);
     });
