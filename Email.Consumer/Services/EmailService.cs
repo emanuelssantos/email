@@ -1,7 +1,5 @@
 ﻿using Email.Consumer.Helpers;
 using Email.Consumer.Interfaces;
-using Microsoft.Extensions.Options;
-using System.Net;
 using System.Net.Mail;
 
 namespace Email.Consumer.Services;

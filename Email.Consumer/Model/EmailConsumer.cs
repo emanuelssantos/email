@@ -1,5 +1,4 @@
-﻿using Email.Consumer.Controllers;
-using Email.Consumer.Interfaces;
+﻿using Email.Consumer.Interfaces;
 using MassTransit;
 
 namespace Email.Consumer.Model;

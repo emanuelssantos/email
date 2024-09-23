@@ -1,6 +1,4 @@
-﻿using Email.Domain;
-using Microsoft.AspNetCore.Components.Web;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 
 namespace Email.Consumer.Helpers;

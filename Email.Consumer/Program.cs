@@ -24,7 +24,7 @@ builder.Services.AddMassTransit(m =>
         var configuration = ctx.GetRequiredService<IConfiguration>();
         var host = configuration.GetConnectionString("RabbitMQConnection");
         cfg.Host(host);
-        
+
         cfg.ConcurrentMessageLimit = 10;
         cfg.ConfigureEndpoints(ctx);
     });
