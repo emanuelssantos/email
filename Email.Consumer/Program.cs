@@ -1,11 +1,17 @@
+using Email.Consumer.Helpers;
+using Email.Consumer.Interfaces;
 using Email.Consumer.Model;
+using Email.Consumer.Services;
 using MassTransit;
 
 var builder = Host.CreateApplicationBuilder(args);
 
+// Add service defaults & Aspire components.
+builder.AddServiceDefaults();
+
 var smtpSettings = builder.Configuration.GetSection("SMTP").Get<SmtpSettings>();
 
-// Registrar a inst√¢ncia do SmtpSettings
+// Registrar a inst‚ncia do SmtpSettings
 builder.Services.AddSingleton(smtpSettings);
 
 builder.Services.AddScoped<IEmailService, EmailService>();

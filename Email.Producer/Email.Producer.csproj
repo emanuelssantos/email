@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Email.Aspire\Email.Aspire.ServiceDefaults\Email.Aspire.ServiceDefaults.csproj" />
     <ProjectReference Include="..\Email.Domain\Email.Domain.csproj" />
   </ItemGroup>
 
